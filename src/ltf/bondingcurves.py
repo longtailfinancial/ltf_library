@@ -2,7 +2,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 import pkg_resources
-DEFAULT_PATH = pkg_resources.resource_stream(__name__, 'data/bondingcurves_initial_values.csv')
+DEFAULT_PATH = pkg_resources.resource_stream('ltf', 'data/bondingcurves_initial_values.csv')
 CURRENT_SUPPLY = 16000000
 ZOOM = 1
 RESERVE_RATE = 0.2
@@ -12,7 +12,7 @@ RESERVE_POWER = 4
 class Sigmoid:
     """
     Sigmoid curve
-    Link to default data:
+    Link to default data: https://raw.githubusercontent.com/longtailfinancial/ltf_library/main/src/ltf/data/bondingcurves_initial_values.csv
     ...
 
     Attributes
@@ -257,12 +257,12 @@ class Augmented(MultiSigmoid):
     """
     def __init__(
         self,
-        csv_file=DEFAULT_PATH,
+        csv_path=DEFAULT_PATH,
         current_supply=CURRENT_SUPPLY,
         zoom=ZOOM,
         reserve_rate_input=RESERVE_RATE
         ):
-        super(Augmented, self).__init__(csv_file, current_supply, zoom)
+        super(Augmented, self).__init__(csv_path, current_supply, zoom)
         self.reserve_rate = reserve_rate_input
     
     def curve(self, x):
@@ -326,13 +326,13 @@ class Smart(Augmented):
     
     def __init__(
         self,
-        csv_file=DEFAULT_PATH,
+        csv_path=DEFAULT_PATH,
         current_supply=CURRENT_SUPPLY,
         zoom=ZOOM,
         reserve_rate_input=RESERVE_RATE,
         reserve_power_input=RESERVE_POWER
         ):
-        super(Smart, self).__init__(csv_file, current_supply, zoom, reserve_rate_input)
+        super(Smart, self).__init__(csv_path, current_supply, zoom, reserve_rate_input)
         self.reserve_power = reserve_power_input
         self.reserve_rate = 1
         
